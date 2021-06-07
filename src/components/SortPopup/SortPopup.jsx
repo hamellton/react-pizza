@@ -43,6 +43,7 @@ const SortPopup = () => {
             if (active === index) {
               return <span>{el}</span>;
             }
+            return "";
           })}
         </span>
       </div>
