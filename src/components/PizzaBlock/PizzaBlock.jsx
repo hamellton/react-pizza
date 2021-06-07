@@ -1,27 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import classNames from "classnames";
 
-const PizzaBlock = ({ items, name, id }) => {
+const PizzaBlock = ({ imageUrl, name, price, types, sizes }) => {
+  const [avaiableTypes] = useState(["тонкое", "традиционное"]);
+  const [activeType, setActiveType] = useState(types[0]);
+
+  const [avaiableSizes] = useState([26, 30, 40]);
+  const [activeSize, setActiveSize] = useState(sizes[0]);
+
+  const onSelectType = (index) => {
+    setActiveType(index);
+  };
+
+  const onSelectSize = (index) => {
+    setActiveSize(index);
+  };
+
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-        alt="Pizza"
-      />
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {avaiableTypes.map((el, index) => {
+            return (
+              <li
+                onClick={() => onSelectType(index)}
+                key={el}
+                className={classNames({
+                  active: activeType === index,
+                  disabled: !types.includes(index),
+                })}
+              >
+                {el}
+              </li>
+            );
+          })}
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {avaiableSizes.map((el, index) => {
+            return (
+              <li
+                onClick={() => onSelectSize(index)}
+                key={el}
+                className={classNames({
+                  active: activeSize === index,
+                  disabled: !sizes.includes(el),
+                })}
+              >
+                {`${el} см.`}
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от 395 ₽</div>
+        <div className="pizza-block__price">от {price} ₽</div>
         <div className="button button--outline button--add">
           <svg
             width="12"
@@ -41,6 +76,14 @@ const PizzaBlock = ({ items, name, id }) => {
       </div>
     </div>
   );
+};
+
+PizzaBlock.prototype = {
+  name: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  types: PropTypes.arrayOf(PropTypes.number).isRequired,
+  sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default PizzaBlock;

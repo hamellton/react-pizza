@@ -4,7 +4,7 @@ import SortPopup from "../../components/SortPopup/SortPopup";
 import PizzaBlock from "../../components/PizzaBlock/PizzaBlock";
 
 const Home = ({ items }) => {
-  if (!items) {
+  if (items.length === 0) {
     return <h1>Идет загрузка...</h1>;
   }
   return (
@@ -16,9 +16,7 @@ const Home = ({ items }) => {
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {items.map((el) => {
-          return (
-            <PizzaBlock id={el.id} name={el.name} key={el.id} items={items} />
-          );
+          return <PizzaBlock key={el.id} obj={el} {...el} />;
         })}
       </div>
     </div>
