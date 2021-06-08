@@ -16,7 +16,7 @@ const Home = ({ items }) => {
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {items.map((el) => {
-          return <PizzaBlock key={el.id} obj={el} {...el} />;
+          return <PizzaBlock key={el.id} {...el} />;
         })}
       </div>
     </div>
